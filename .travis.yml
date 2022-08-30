@@ -1,0 +1,21 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+before_install:
+  - docker build -t alperzafer/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true alperzafer/react-test npm test
+
+after_success:
+  - docker build -t alperzafer/mutli-client ./client
+  - docker build -t alperzxafer/mutli-nginx ./nginx
+  - docker build -t alperzafer/mutli-server ./server
+  - docker build -t alperzafer/mutli-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push alperzafer/mutli-client
+  - docker push alperzafer/mutli-nginx
+  - docker push alperzafer/mutli-server
+  - docker push alperzafer/mutli-worker

@@ -11,7 +11,7 @@ script:
 
 after_success:
   - docker build -t alperzafer/mutli-client ./client
-  - docker build -t alperzxafer/mutli-nginx ./nginx
+  - docker build -t alperzafer/mutli-nginx ./nginx
   - docker build -t alperzafer/mutli-server ./server
   - docker build -t alperzafer/mutli-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
